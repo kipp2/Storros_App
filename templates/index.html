@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Social Media App</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <h1>Flask Social Media App</h1>
+
+    <h2>Register User</h2>
+    <form id="registerForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="button" onclick="registerUser()">Register</button>
+    </form>
+
+    <h2>Test Endpoints</h2>
+    <button type="button" onclick="getUserProfile(1)">Get User Profile</button>
+    <button type="button" onclick="updateUserProfile(1)">Update User Profile</button>
+    <button type="button" onclick="followUser(1, 2)">Follow User</button>
+    <button type="button" onclick="unfollowUser(1, 2)">Unfollow User</button>
+    <button type="button" onclick="getUserFollowers(1)">Get User Followers</button>
+    <button type="button" onclick="getUserFollowing(1)">Get User Following</button>
+
+    <script>
+        function registerUser() {
+            var userData = {
+                "username": $("#username").val(),
+                "email": $("#email").val(),
+                "password": $("#password").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:5000/api/register",
+                contentType: "application/json",
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        function getUserProfile(userId) {
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:5000/api/users/" + userId,
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Implement other endpoint testing functions similarly
+
+    </script>
+</body>
+</html>
